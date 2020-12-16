@@ -15,9 +15,26 @@
             Chrome <script>document.write(process.versions.chrome)</script>,
             and Electron <script>document.write(process.versions.electron)</script>.
         </p>
-        <button id="bucket-name-button" class="btn btn-primary">Show Bucket</button>&nbsp;<button id="bucket-name-clear" disabled="true">Clear</button><br>
-        <div id="bucket-name-list"></div>
-        <div id="objectkey-list"></div>
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <button id="bucket-name-button" class="btn btn-primary">Show Bucket</button>&nbsp;
+                    <button id="bucket-name-clear" disabled="true" class="btn btn-secondary">Clear</button><br>
+                </div>
+                <div class="col-sm">
+                    <button id="objectkey-name-clear" disabled="true" class="btn btn-secondary">Clear</button><br>
+                </div>
+            </div>
+            <div class="row">
+              <div class="col-sm">
+                <div id="bucket-name-list"></div>
+              </div>
+              <div class="col-sm">
+                <div id="objectkey-list"></div>
+              </div>
+            </div>
+          </div>
         <script src="render-process.js"></script>
     </body>
 </html>
