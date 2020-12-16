@@ -1,0 +1,22 @@
+{
+  "name": "create-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron .",
+    "make": "electron-builder --win --x64"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^11.1.0",
+    "electron-builder": "^22.9.1"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.810.0",
+    "electron-store": "^6.0.1"
+  }
+}
