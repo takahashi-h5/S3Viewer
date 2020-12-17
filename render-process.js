@@ -15,14 +15,21 @@ const objectkeyClearBtn = document.getElementById('objectkey-name-clear')
 
 objectkeyClearBtn.style.visibility = 'hidden' // 非表示
 
-// ボタンクリック時
+// バケットボタンクリック時
 bucketsNameBtn.addEventListener('click', function(event) {
   objectkeyClearBtn.style.visibility = 'visible' // 表示
   const result =  execSync('aws s3 ls --profile default')
   const arr = result.toString().split('\r\n')
+
+  let htmlText = '<table class="table table-striped"><thead><tr><th scope="col">#</th><th scope="col">Bucket Name</th></thead><tbody>'
   for(let i=0;i< arr.length; i++) {
-    buckets.innerHTML += '<a href=\"#\" onClick=objectkey(this.innerHTML);>' + arr[i].substring(20) + '</a><br>'
+    console.log('test1')
+    htmlText += '<tr><th scope="row">' + (i + 1) + '</th><td>'
+    htmlText += '<a href=\"#\" onClick=objectkey(this.innerHTML);>' + arr[i].substring(20) + '</a><br>'
+    htmlText += '</td></tr>'
   }
+  htmlText += '</tbody></table>'
+  buckets.innerHTML = htmlText
   bucketsNameBtn.setAttribute('disabled', true)
   clearBtn.removeAttribute('disabled')
 })
