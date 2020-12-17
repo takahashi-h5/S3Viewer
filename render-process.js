@@ -1,12 +1,4 @@
-const AWS = require('aws-sdk');
-const s3 = new AWS.S3({apiVersion: '2006-03-01'})
 const execSync = require('child_process').execSync
-
-const BrowserWindow = require('electron').remote.BrowserWindow
-const path = require('path');
-const { DirectoryService, DocDB } = require('aws-sdk');
-const { DiffieHellman } = require('crypto');
-
 const bucketsNameBtn = document.getElementById('bucket-name-button')
 const clearBtn = document.getElementById('bucket-name-clear')
 const buckets = document.getElementById('bucket-name-list')
@@ -14,9 +6,22 @@ const objectkeyList = document.getElementById('objectkey-list')
 const objectkeyClearBtn = document.getElementById('objectkey-name-clear')
 
 objectkeyClearBtn.style.visibility = 'hidden' // 非表示
-
+let s3 = undefined
 // バケットボタンクリック時
 bucketsNameBtn.addEventListener('click', function(event) {
+  // S3インスタンス生成
+  const AWS = require('aws-sdk')
+  const s3Config = {
+    region: 'ap-northeast-1',
+    apiVersion: '2006-03-01'
+  }
+  const proxyUrl = document.getElementById('proxy').value
+  if(proxyUrl) {
+    const proxyagent = require('proxy-agent')
+    s3Config.httpOptions = { agent: proxyagent(proxyUrl) }
+  }
+  s3 = new AWS.S3(s3Config)
+
   objectkeyClearBtn.style.visibility = 'visible' // 表示
   const result =  execSync('aws s3 ls --profile default')
   const arr = result.toString().split('\r\n')

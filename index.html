@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+        <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' 'unsafe-eval';" />
         <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
         <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
         <title>S3 Bucket Viewer</title>
@@ -20,7 +20,8 @@
             <div class="row">
                 <div class="col-sm">
                     <button id="bucket-name-button" class="btn btn-primary">Show Bucket</button>&nbsp;
-                    <button id="bucket-name-clear" disabled="true" class="btn btn-secondary">Clear</button><br>
+                    <button id="bucket-name-clear" disabled="true" class="btn btn-secondary">Clear</button>&nbsp;
+                    <input type="text" id="proxy" placeholder="https://proxy.confrage.co.jp/" size="27px"><br>
                 </div>
                 <div class="col-sm">
                     <button id="objectkey-name-clear" disabled="true" class="btn btn-secondary">Clear</button><br>
