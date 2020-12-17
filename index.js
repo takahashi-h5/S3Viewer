@@ -5,6 +5,7 @@ function createWindow () {
   const win = new BrowserWindow({
     width: store.get('window.width',800),
     height: store.get('window.height',600),
+    icon: 'confrage.ico',
     center: true,
     resizable: true,
     webPreferences: {
