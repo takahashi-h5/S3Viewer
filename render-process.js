@@ -22,8 +22,7 @@ bucketsNameBtn.addEventListener('click', function(event) {
   const arr = result.toString().split('\r\n')
 
   let htmlText = '<table class="table table-striped"><thead><tr><th scope="col">#</th><th scope="col">Bucket Name</th></thead><tbody>'
-  for(let i=0;i< arr.length; i++) {
-    console.log('test1')
+  for(let i=0;i< arr.length - 1; i++) {
     htmlText += '<tr><th scope="row">' + (i + 1) + '</th><td>'
     htmlText += '<a href=\"#\" onClick=objectkey(this.innerHTML);>' + arr[i].substring(20) + '</a><br>'
     htmlText += '</td></tr>'
