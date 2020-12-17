@@ -13,8 +13,11 @@ const buckets = document.getElementById('bucket-name-list')
 const objectkeyList = document.getElementById('objectkey-list')
 const objectkeyClearBtn = document.getElementById('objectkey-name-clear')
 
+objectkeyClearBtn.style.visibility = 'hidden' // 非表示
+
 // ボタンクリック時
 bucketsNameBtn.addEventListener('click', function(event) {
+  objectkeyClearBtn.style.visibility = 'visible' // 表示
   const result =  execSync('aws s3 ls --profile default')
   const arr = result.toString().split('\r\n')
   for(let i=0;i< arr.length; i++) {
@@ -33,6 +36,7 @@ clearBtn.addEventListener('click',function(event) {
   objectkeyList.innerHTML = ''
 })
 
+// クリアボタンクリック時
 objectkeyClearBtn.addEventListener('click',function(event) {
   objectkeyClearBtn.setAttribute('disabled', true)
   objectkeyList.innerHTML = ''
@@ -55,10 +59,21 @@ function objectkey(hoge) {
     }
   }
 }
-function objectkey2(bucket, key) {
+async function objectkey2(bucket, key) {
   objectkeyList.innerHTML = '' // 初期化
-  console.log('bucket')
-  console.log(bucket)
-  console.log('key')
-  console.log(key)
+  const params = {
+    'Bucket': bucket,
+    'Prefix': key
+  }
+  const data = await s3.listObjectsV2(params)//, function(err, data) {
+    console.log(data.Contents)
+    // data.Contents.forEach(function(elem){
+    //   console.log(elem.Key)
+    //   if(elem.Key.includes('PRE')) {
+    //     objectkeyList.innerHTML += '<a href=\"#\" onClick=objectkey2(\"' + hoge + '\",' + 'this.innerHTML);>' + arr[i].substr(31) + '</a><br>' // リンク
+    //   } else {
+    //     objectkeyList.innerHTML += '<span>' + elem.Key.substr(31) + '</span><br>' // リンク外す
+    //   }
+    // })
+  // })
 }
