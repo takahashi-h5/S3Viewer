@@ -24,7 +24,7 @@ bucketsNameBtn.addEventListener('click', function(event) {
   let htmlText = '<table class="table table-striped"><thead><tr><th scope="col">#</th><th scope="col">Bucket Name</th></thead><tbody>'
   for(let i=0;i< arr.length - 1; i++) {
     htmlText += '<tr><th scope="row">' + (i + 1) + '</th><td>'
-    htmlText += '<a href=\"#\" onClick=objectkey(this.innerHTML);>' + arr[i].substring(20) + '</a><br>'
+    htmlText += '<a href=\"#\" onClick=getBucket(this.innerHTML);>' + arr[i].substring(20) + '</a><br>'
     htmlText += '</td></tr>'
   }
   htmlText += '</tbody></table>'
@@ -48,40 +48,40 @@ objectkeyClearBtn.addEventListener('click',function(event) {
   objectkeyList.innerHTML = ''
 })
 
-function objectkey(hoge) {
+function getBucket(hoge) {
   objectkeyClearBtn.removeAttribute('disabled')
   objectkeyList.innerHTML = '' // 初期化
-  console.log(hoge)
 
   const result =  execSync('aws s3 ls ' + hoge + ' --profile default')
-  // console.log(result.toString().split('\r\n'))
   const arr = result.toString().split('\r\n')
-  for(let i=0;i< arr.length; i++) {
-    let match = null
+  let htmlText = '<table class="table table-striped"><thead><tr><th scope="col">#</th><th scope="col">ObjectKey</th></thead><tbody>'
+  for(let i=0;i< arr.length - 1; i++) {
+    htmlText += '<tr><th scope="row">' + (i + 1) + '</th><td>'
     if(arr[i].includes('PRE')) {
-      objectkeyList.innerHTML += '<a href=\"#\" onClick=objectkey2(\"' + hoge + '\",' + 'this.innerHTML);>' + arr[i].substr(31) + '</a><br>' // リンク
+      htmlText += '<a href=\"#\" onClick=objectkey(\"' + hoge + '\",' + 'this.innerHTML);>' + arr[i].substr(31) + '</a><br>' // リンク
     } else {
-      objectkeyList.innerHTML += '<span>' + arr[i].substr(31) + '</span><br>' // リンク外す
+      htmlText += '<span>' + arr[i].substr(31) + '</span><br>' // リンク外す
     }
+    htmlText += '</td></tr>'
   }
+  htmlText += '</tbody></table>'
+  console.log(htmlText)
+  objectkeyList.innerHTML = htmlText
 }
-async function objectkey2(bucket, key) {
-  console.log("start async function")  
+
+async function objectkey(bucket, key) {
   objectkeyList.innerHTML = '' // 初期化
   const params = {
     'Bucket': bucket,
     'Prefix': key
   }
-  const data = await s3.listObjectsV2(params).promise()//, function(err, data) {
-    console.log(data)
-    console.log(data.Contents)
-    // data.Contents.forEach(function(elem){
-    //   console.log(elem.Key)
-    //   if(elem.Key.includes('PRE')) {
-    //     objectkeyList.innerHTML += '<a href=\"#\" onClick=objectkey2(\"' + hoge + '\",' + 'this.innerHTML);>' + arr[i].substr(31) + '</a><br>' // リンク
-    //   } else {
-    //     objectkeyList.innerHTML += '<span>' + elem.Key.substr(31) + '</span><br>' // リンク外す
-    //   }
-    // })
-  // })
+  const data = await s3.listObjectsV2(params).promise()
+  let htmlText = '<table class="table table-striped"><thead><tr><th scope="col">#</th><th scope="col">ObjectKey</th></thead><tbody>'
+  data.Contents.forEach(function(elem,i){
+    htmlText += '<tr><th scope="row">' + (i + 1) + '</th><td>'
+    htmlText += '<span>' + elem.Key + '</span><br>' // リンク外す
+    htmlText += '</td></tr>'
+  })
+  htmlText += '</tbody></table>'
+  objectkeyList.innerHTML = htmlText
 }

@@ -14,7 +14,7 @@ function createWindow () {
   })
   win.hide()
   win.loadFile('index.html')
-  win.webContents.openDevTools() // 開発者ツール open
+  // win.webContents.openDevTools() // 開発者ツール
   win.webContents.on('did-finish-load', ()=>{
     win.show();
   });
@@ -24,7 +24,7 @@ function createWindow () {
   })
 }
 
-app.whenReady().then(createWindow)
+app.whenReady().then(createWindow) // 表示
 
 // windows only
 app.on('window-all-closed', () => {
