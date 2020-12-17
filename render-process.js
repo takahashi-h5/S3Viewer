@@ -60,12 +60,14 @@ function objectkey(hoge) {
   }
 }
 async function objectkey2(bucket, key) {
+  console.log("start async function")  
   objectkeyList.innerHTML = '' // 初期化
   const params = {
     'Bucket': bucket,
     'Prefix': key
   }
-  const data = await s3.listObjectsV2(params)//, function(err, data) {
+  const data = await s3.listObjectsV2(params).promise()//, function(err, data) {
+    console.log(data)
     console.log(data.Contents)
     // data.Contents.forEach(function(elem){
     //   console.log(elem.Key)
