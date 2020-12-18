@@ -5,7 +5,7 @@ function createWindow () {
   const win = new BrowserWindow({
     width: store.get('window.width',800),
     height: store.get('window.height',600),
-    icon: 'confrage.ico',
+    icon: __dirname + '/confrage.ico',
     center: true,
     resizable: true,
     webPreferences: {
@@ -24,7 +24,6 @@ function createWindow () {
     store.set('window.height', win.getSize()[1]) // height
   })
 }
-
 app.whenReady().then(createWindow) // 表示
 
 // windows only
