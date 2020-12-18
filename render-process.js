@@ -1,12 +1,24 @@
+const { ipcRenderer } = require('electron')
 const execSync = require('child_process').execSync
 const bucketsNameBtn = document.getElementById('bucket-name-button')
 const clearBtn = document.getElementById('bucket-name-clear')
 const buckets = document.getElementById('bucket-name-list')
 const objectkeyList = document.getElementById('objectkey-list')
 const objectkeyClearBtn = document.getElementById('objectkey-name-clear')
+const Store = require('electron-store')
+const store = new Store()
+const proxyText = document.getElementById('proxy')
+
+proxyText.value = ipcRenderer.sendSync('invoke-test', 'hoge')
 
 objectkeyClearBtn.style.visibility = 'hidden' // 非表示
 let s3 = undefined
+
+// proxy設定blur時
+proxyText.onblur = function() {
+  store.set('window.proxy',proxyText.value)
+}
+
 // バケットボタンクリック時
 bucketsNameBtn.addEventListener('click', function(event) {
   // S3インスタンス生成
@@ -15,7 +27,7 @@ bucketsNameBtn.addEventListener('click', function(event) {
     region: 'ap-northeast-1',
     apiVersion: '2006-03-01'
   }
-  const proxyUrl = document.getElementById('proxy').value
+  const proxyUrl = proxyText.value
   if(proxyUrl) {
     const proxyagent = require('proxy-agent')
     s3Config.httpOptions = { agent: proxyagent(proxyUrl) }
@@ -70,7 +82,6 @@ function getBucket(hoge) {
     htmlText += '</td></tr>'
   }
   htmlText += '</tbody></table>'
-  console.log(htmlText)
   objectkeyList.innerHTML = htmlText
 }
 

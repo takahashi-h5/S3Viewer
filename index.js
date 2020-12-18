@@ -1,6 +1,12 @@
-const { app, BrowserWindow, Menu, MenuItem, dialog } = require('electron')
+const { app, BrowserWindow, Menu, MenuItem, ipcMain, dialog } = require('electron')
 const Store = require('electron-store')
 const store = new Store()
+
+ipcMain.on('invoke-test', (event, message) => {
+  event.returnValue = store.get('window.proxy','')
+  return
+})
+
 function createWindow () {
   const win = new BrowserWindow({
     width: store.get('window.width',800),
@@ -10,7 +16,7 @@ function createWindow () {
     resizable: true,
     webPreferences: {
       nodeIntegration: true, // node API許可
-      enableRemoteModule: true, // 永続化
+      enableRemoteModule: true // 永続化
     }
   })
   win.hide()
