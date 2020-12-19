@@ -15,16 +15,43 @@
             Chrome <script>document.write(process.versions.chrome)</script>,
             and Electron <script>document.write(process.versions.electron)</script>.
         </p>
-        
+
         <div class="container">
             <div class="row">
+                <div class="accordion" id="accordion">
+                    <div class="accordion-item">
+                        <button class="accordion-button" type="button" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            バケットの概要
+                        </button>
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        リージョン
+                                    </div>
+                                    <div class="col-sm">
+                                        Amazon リソースネーム (ARN)
+                                    </div>
+                                    <div class="col-sm">
+                                        作成日 取得できる？
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-sm">
+                    <br>
                     <button id="bucket-name-button" class="btn btn-primary">Show Bucket</button>&nbsp;
                     <button id="bucket-name-clear" disabled="true" class="btn btn-secondary">Clear</button>&nbsp;
                     <input type="text" id="proxy" placeholder="https://proxy.confrage.co.jp/" size="27px"><br>
                 </div>
                 <div class="col-sm">
-                    <button id="objectkey-name-clear" disabled="true" class="btn btn-secondary">Clear</button><br>
+                    <br>
+                    <button id="objectkey-name-clear" disabled="true" class="btn btn-secondary">Clear</button>&nbsp;
+                    <span id="pankuzu-list"></span>
                 </div>
             </div>
             <div class="row">

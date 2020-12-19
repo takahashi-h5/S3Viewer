@@ -10,7 +10,7 @@ ipcMain.on('invoke-test', (event, message) => {
 function createWindow () {
   const win = new BrowserWindow({
     width: store.get('window.width',800),
-    height: store.get('window.height',600),
+    height: store.get('window.height',1000),
     icon: __dirname + '/confrage.ico',
     center: true,
     resizable: true,

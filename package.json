@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
-    "make": "electron-builder --win --x64"
+    "make": "electron-builder  --win --x64",
+    "build-appx": "electron-builder -w appx --config dist/appx_setting.json"
   },
   "keywords": [],
   "author": "CONFRAGE Corporation",
