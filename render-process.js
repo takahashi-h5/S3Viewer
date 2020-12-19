@@ -6,6 +6,7 @@ const buckets = document.getElementById('bucket-name-list')
 const objectkeyList = document.getElementById('objectkey-list')
 const objectkeyClearBtn = document.getElementById('objectkey-name-clear')
 const proxyText = document.getElementById('proxy')
+const regionName = document.getElementById('regionName')
 const pankuzuList = document.getElementById('pankuzu-list')
 const Store = require('electron-store')
 const store = new Store()
@@ -70,18 +71,21 @@ objectkeyClearBtn.addEventListener('click',function(event) {
   pankuzuList.innerHTML = ''
 })
 
-function getBucket(hoge) {
+function getBucket(bucket) {
   objectkeyClearBtn.removeAttribute('disabled')
   objectkeyList.innerHTML = '' // clear
   pankuzuList.innerHTML = '' // clear
 
-  const result =  execSync('aws s3 ls ' + hoge + ' --profile default')
+  const region =  execSync('aws s3api get-bucket-location --bucket ' + bucket + ' --profile default') // region get
+  regionName.innerHTML = JSON.parse(region.toString()).LocationConstraint // region set
+
+  const result =  execSync('aws s3 ls ' + bucket + ' --profile default')
   const arr = result.toString().split('\r\n')
   let htmlText = '<table class=\'table table-striped\'><thead><tr><th scope=\'col\'>#</th><th scope=\'col\'>ObjectKey</th></thead><tbody>'
   for(let i=0;i< arr.length - 1; i++) {
     htmlText += '<tr><th scope=\'row\'>' + (i + 1) + '</th><td>'
     if(arr[i].includes('PRE')) {
-      htmlText += '<a href=\'#\' onClick=objectkey(\'' + hoge + '\',' + 'this.innerHTML);>' + arr[i].substr(31) + '</a><br>' // リンク
+      htmlText += '<a href=\'#\' onClick=objectkey(\'' + bucket + '\',' + 'this.innerHTML);>' + arr[i].substr(31) + '</a><br>' // リンク
     } else {
       htmlText += '<span>' + arr[i].substr(31) + '</span><br>' // リンク外す
     }

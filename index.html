@@ -4,8 +4,9 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' 'unsafe-eval';" />
-        <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+        <!-- <script src="./node_modules/bootstrap/js/dist/popover.js"></script> -->
         <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
         <title>S3 Bucket Viewer</title>
     </head>
     <body style="background: white;">
@@ -15,7 +16,6 @@
             Chrome <script>document.write(process.versions.chrome)</script>,
             and Electron <script>document.write(process.versions.electron)</script>.
         </p>
-
         <div class="container">
             <div class="row">
                 <div class="accordion" id="accordion">
@@ -27,7 +27,7 @@
                             <div class="accordion-body">
                                 <div class="row">
                                     <div class="col-sm">
-                                        リージョン
+                                        リージョン:<span id='regionName'></span>
                                     </div>
                                     <div class="col-sm">
                                         Amazon リソースネーム (ARN)
