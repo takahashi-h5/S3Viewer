@@ -4,8 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' 'unsafe-eval';" />
-        <!-- <script src="./node_modules/bootstrap/js/dist/popover.js"></script> -->
-        <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
+        <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
         <title>S3 Bucket Viewer</title>
     </head>
@@ -27,13 +26,18 @@
                             <div class="accordion-body">
                                 <div class="row">
                                     <div class="col-sm">
-                                        リージョン:<span id='regionName'></span>
+                                        リージョン<br><span id='regionName'></span>
                                     </div>
                                     <div class="col-sm">
-                                        Amazon リソースネーム (ARN)
+                                        Amazonリソースネーム(ARN)<br>
+                                        <a href="#" onclick="copyArn();"><img src="img/copy.png"></a>&nbsp;<span id='arn'></span>
                                     </div>
                                     <div class="col-sm">
-                                        作成日 取得できる？
+                                        S3 URI<br>
+                                        <a href="#" onclick="copyS3Uri();"><img src="img/copy.png"></a>&nbsp;<span id='s3uri'></span>
+                                    </div>
+                                    <div class="col-sm">
+                                        作成日<br><span id='createDate'></span>
                                     </div>
                                 </div>
                             </div>

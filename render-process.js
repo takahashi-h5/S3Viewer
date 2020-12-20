@@ -1,4 +1,4 @@
-const { ipcRenderer } = require('electron')
+const { ipcRenderer, clipboard } = require('electron')
 const execSync = require('child_process').execSync
 const bucketsNameBtn = document.getElementById('bucket-name-button')
 const clearBtn = document.getElementById('bucket-name-clear')
@@ -7,6 +7,9 @@ const objectkeyList = document.getElementById('objectkey-list')
 const objectkeyClearBtn = document.getElementById('objectkey-name-clear')
 const proxyText = document.getElementById('proxy')
 const regionName = document.getElementById('regionName')
+const arnName = document.getElementById('arn')
+const s3uri = document.getElementById('s3uri')
+const createDate = document.getElementById('createDate')
 const pankuzuList = document.getElementById('pankuzu-list')
 const Store = require('electron-store')
 const store = new Store()
@@ -62,6 +65,9 @@ clearBtn.addEventListener('click',function(event) {
   buckets.innerHTML = ''
   objectkeyList.innerHTML = ''
   pankuzuList.innerHTML = ''
+  regionName.innerHTML = ''
+  arnName.innerHTML = ''
+  s3uri.innerHTML = ''
 })
 
 // クリアボタンクリック時
@@ -69,15 +75,19 @@ objectkeyClearBtn.addEventListener('click',function(event) {
   objectkeyClearBtn.setAttribute('disabled', true)
   objectkeyList.innerHTML = ''
   pankuzuList.innerHTML = ''
+  regionName.innerHTML = ''
+  arnName.innerHTML = ''
+  s3uri.innerHTML = ''
 })
 
 function getBucket(bucket) {
   objectkeyClearBtn.removeAttribute('disabled')
   objectkeyList.innerHTML = '' // clear
   pankuzuList.innerHTML = '' // clear
-
   const region =  execSync('aws s3api get-bucket-location --bucket ' + bucket + ' --profile default') // region get
   regionName.innerHTML = JSON.parse(region.toString()).LocationConstraint // region set
+  arnName.innerHTML = 'arn:aws:s3:::' + bucket
+  s3uri.innerHTML = 's3://' + bucket
 
   const result =  execSync('aws s3 ls ' + bucket + ' --profile default')
   const arr = result.toString().split('\r\n')
@@ -97,6 +107,7 @@ function getBucket(bucket) {
 
 async function objectkey(bucket, key) {
   objectkeyList.innerHTML = '' // clear
+  s3uri.innerHTML = 's3://' + bucket + '/' + key
   const params = {
     'Bucket': bucket,
     'Prefix': key
@@ -131,4 +142,12 @@ async function objectkey(bucket, key) {
     '<a href=\'#\' onClick=getBucket(this.innerHTML);>' + bucket + '</a>&nbsp;&gt;' + key :
       // (pankuzuList.innerHTML += nextkey)
       (pankuzuList.innerHTML = '<a href=\'#\' onClick=getBucket(this.innerHTML);>' + bucket + '</a>&nbsp;&gt;' + key)
+}
+
+function copyArn() {
+  clipboard.writeText(arnName.innerHTML)
+}
+
+function copyS3Uri() {
+  clipboard.writeText(s3uri.innerHTML)
 }
