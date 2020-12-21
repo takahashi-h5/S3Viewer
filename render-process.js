@@ -24,6 +24,15 @@ proxyText.onblur = function() {
   store.set('window.proxy',proxyText.value)
 }
 
+(function(){
+  const check =  execSync('aws --version').toString()
+  if(!check.includes('aws-cli')){
+    document.getElementById('awscli').innerHTML = 'Caution&nbsp;:&nbsp;AWS CLI2 is not installed.&nbsp;<a href=\'https://awscli.amazonaws.com/AWSCLIV2.msi\'>Install Now pls.</a>'
+    bucketsNameBtn.setAttribute('disabled', true)
+  } else {
+    bucketsNameBtn.removeAttribute('disabled')
+  }
+}())
 // バケットボタンクリック時
 bucketsNameBtn.addEventListener('click', function(event) {
   // S3インスタンス生成
@@ -144,10 +153,16 @@ async function objectkey(bucket, key) {
       (pankuzuList.innerHTML = '<a href=\'#\' onClick=getBucket(this.innerHTML);>' + bucket + '</a>&nbsp;&gt;' + key)
 }
 
+/**
+ * copy arn.
+ */
 function copyArn() {
   clipboard.writeText(arnName.innerHTML)
 }
 
+/**
+ * copy s3uri.
+ */
 function copyS3Uri() {
   clipboard.writeText(s3uri.innerHTML)
 }

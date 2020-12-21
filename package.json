@@ -11,16 +11,32 @@
   },
   "keywords": [],
   "author": "CONFRAGE Corporation",
-  "license": "ISC",
+  "license": "SEE LICENSE IN LICENSE",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/takahashi-h5/S3Viewer"
+  },
   "devDependencies": {
     "electron": "^11.1.0",
     "electron-builder": "^22.9.1"
   },
   "dependencies": {
-    "@popperjs/core": "^2.6.0",
     "aws-sdk": "^2.810.0",
     "bootstrap": "^5.0.0-beta1",
     "electron-store": "^6.0.1",
     "proxy-agent": "^4.0.0"
+  },
+  "build": {
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "perMachine": true,
+      "oneClick": false,
+      "runAfterFinish" :true,
+      "createDesktopShortcut": false,
+      "createStartMenuShortcut": false,
+      "allowToChangeInstallationDirectory": true
+    }
   }
 }
